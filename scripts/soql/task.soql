@@ -1,0 +1,1 @@
+SELECT Id, (SELECT RelationId, Relation.Name from TaskWhoRelations) from Task

@@ -1,0 +1,9 @@
+SELECT id, name, recordtype.name, npsp__Primary_Affiliation__c
+from contact
+where recordtype.name != 'Staff'
+and npsp__Primary_Affiliation__c != ''
+and id in (SELECT RelationId
+from TaskWhoRelation
+WHERE TaskId = ts.Id
+ and Type = 'Contact')
+limit 1

@@ -1,0 +1,2 @@
+SELECT Id, npe5__Contact__c, npe5__Organization__c, npe5__Primary__c, npe5__Role__c, npe5__Status__c
+  FROM npe5__Affiliation__c

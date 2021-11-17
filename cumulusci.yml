@@ -1,0 +1,27 @@
+minimum_cumulusci_version: '3.47.0'
+project:
+    name: NPSP_TDTM
+    package:
+        name: NPSP_TDTM
+        api_version: '52.0'
+    dependencies:
+        - github: 'https://github.com/SalesforceFoundation/NPSP'
+    git:
+        default_branch: 'main'
+    source_format: sfdx
+
+tasks:
+    robot:
+        options:
+            suites: robot/NPSP_TDTM/tests
+            options:
+                outputdir: robot/NPSP_TDTM/results
+
+    robot_testdoc:
+        options:
+            path: robot/NPSP_TDTM/tests
+            output: robot/NPSP_TDTM/doc/NPSP_TDTM_tests.html
+
+    run_tests:
+        options:
+            required_org_code_coverage_percent: 75
