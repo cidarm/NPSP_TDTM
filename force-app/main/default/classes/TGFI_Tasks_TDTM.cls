@@ -32,7 +32,6 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
             Id cPAOId = [SELECT Id, npsp__Primary_Affiliation__r.Id
             from contact
             where npsp__Primary_Affiliation__c != ''
-            and RecordType.name != 'Staff'
             and Id in (SELECT RelationId
             from TaskWhoRelation
             WHERE TaskId = :listTaskId
