@@ -1,6 +1,7 @@
 {
   "orgName": "NPSP_TDTM - Beta Test Org",
   "edition": "Developer",
+  "features": ["SharedActivities"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
