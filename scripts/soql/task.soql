@@ -1,1 +1,1 @@
-SELECT Id, (SELECT RelationId, Relation.Name from TaskWhoRelations) from Task
+SELECT Id, (SELECT RelationId, Relation.Name, (select lastname from contacts) from TaskWhoRelations) from Task
