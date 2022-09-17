@@ -5,7 +5,7 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
     global override npsp.TDTM_Runnable.DmlWrapper run(List<SObject> newlist, List<SObject> oldlist,
     npsp.TDTM_Runnable.Action triggerAction, Schema.DescribeSObjectResult objResult) {
        npsp.TDTM_Runnable.dmlWrapper dmlWrapper = new npsp.TDTM_Runnable.DmlWrapper();
-       
+       try {
        List<SObject> ots = oldlist;
 
        TGFI_checkrecursive.firstcall = true;
@@ -24,20 +24,23 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
                 }
             }
             
-            list<Task> updateTask = [select Id, WhatId from Task where Id in :listTaskId with SECURITY_ENFORCED];
+            List<Task> tskList = [Select Id, WhatId, WhoId from Task where Id in :listTaskId WITH SECURITY_ENFORCED];
             
             /* Pull npsp__Primary_Affiliation__c from result of querying the contact object*/
 
-            
-            Id cPAOId = [SELECT Id, npsp__Primary_Affiliation__r.Id
-            from contact
-            where npsp__Primary_Affiliation__c != ''
-            and Id in (SELECT RelationId
+            Map<String, Id> cPriAff = new Map<String,Id>();
+            for(Contact tRC : [SELECT Id, npsp__Primary_Affiliation__c
+                                from contact
+                                where npsp__Primary_Affiliation__c != null 
+                                and Id in (SELECT RelationId
             from TaskWhoRelation
-            WHERE TaskId = :listTaskId
-             and Type = 'Contact')
-            with SECURITY_ENFORCED
-            limit 1].npsp__Primary_Affiliation__r.Id;
+            WHERE Type = 'Contact')] ){
+        
+        cPriAff.put(tRC.Id, tRC.npsp__Primary_Affiliation__c);
+
+
+    }
+System.debug('trc is '+ cPriAff);
             
             system.debug('**cPAOID is **' + cPAOId );
            
@@ -47,5 +50,9 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
             dmlWrapper.objectsToUpdate.addAll((list<SObject>)updateTask);
         }
         return dmlWrapper;
+       }
+        catch (Exception e){
+            throw new DmlException(e.getMessage());
+        }
     }
  }
