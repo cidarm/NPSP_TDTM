@@ -1,1 +1,2 @@
-SELECT Id, (SELECT RelationId, Relation.Name, (select lastname from contacts) from TaskWhoRelations) from Task
+SELECT Id, Subject, (SELECT RelationId from TaskWhoRelations where Type = 'Contact') FROM Task
+
