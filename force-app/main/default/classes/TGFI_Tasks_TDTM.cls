@@ -7,17 +7,24 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
     global override npsp.TDTM_Runnable.DmlWrapper run(List<SObject> newlist, List<SObject> oldlist,
     npsp.TDTM_Runnable.Action triggerAction, Schema.DescribeSObjectResult objResult) {
        npsp.TDTM_Runnable.dmlWrapper dmlWrapper = new npsp.TDTM_Runnable.DmlWrapper();
+
+       System.debug('NPSP Runnable Action is ' +triggerAction );
        try {
         //Task ID used 
         Set<Id> taskToUpdate = new Set<Id>();
-        //Recursive variable.
-       TGFI_checkrecursive.firstcall = true;
 
         //Logic used to determine if the Task WhatID needs to be updated during trigger execution.
         if ((triggerAction == npsp.TDTM_Runnable.Action.AfterInsert ||
              triggerAction == npsp.TDTM_Runnable.Action.AfterUpdate
                && 
-                !TGFI_checkrecursive.firstcall)  ) {
+                (!TGFI_checkrecursive.firstcall))  ) {
+        
+        //Recursive variable.
+       TGFI_checkrecursive.firstcall = true;
+
+        System.debug('Determined TriggerAction is ' + triggerAction);
+        System.debug('Recursive Check is inside '+ TGFI_checkrecursive.firstcall);
+
 
                 List<SObject> listToCheck = newlist != null ? newlist : oldlist;
 
@@ -43,6 +50,7 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
         }
 
     private static void updateTaskRelId(Set<Id> taskToUpdate, DmlWrapper dmlWrapper){
+
         //Create List of Task for update purposes.
        list<Task> updatedTasks = new list<Task>();
  
