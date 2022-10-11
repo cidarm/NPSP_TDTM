@@ -62,6 +62,7 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
         for(Contact tRC : [Select id, npsp__Primary_Affiliation__c
                             FROM Contact
                             WHERE npsp__Primary_Affiliation__c != null 
+                            and RecordType.name != 'Staff'
                             //and Id in :tRelId.keySet(RelationId)
                             and Id in (Select RelationId
                             FROM TaskWhoRelation
