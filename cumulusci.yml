@@ -3,7 +3,7 @@ project:
     name: NPSP_TDTM
     package:
         name: NPSP_TDTM
-        api_version: '52.0'
+        api_version: '55.0'
     dependencies:
         - github: 'https://github.com/SalesforceFoundation/NPSP'
     git:
