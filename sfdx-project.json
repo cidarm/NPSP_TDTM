@@ -8,5 +8,5 @@
   "name": "NPSP_TDTM",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "52.0"
+  "sourceApiVersion": "55.0"
 }
