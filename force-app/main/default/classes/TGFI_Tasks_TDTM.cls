@@ -77,7 +77,8 @@ global class TGFI_Tasks_TDTM extends npsp.TDTM_runnable {
                                     FROM TaskWhoRelation
                                     WHERE Type = 'Contact'
                                     AND TaskId in :taskToUpdate
-                                    WITH SECURITY_ENFORCED]){
+                                    Order by Id
+                                    Limit 1]){
                             tRelId.put(xt.TaskId, xt.RelationId);
         System.debug('Relation ID' + tRelId);
                                                         }
